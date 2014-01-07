@@ -5,32 +5,26 @@ dashboardApp.config(function($routeProvider) {
             .when('/',
             {
                 controller: 'randomController',
-                templateUrl: 'app/partials/default.html'
-            })
-            .when('#/info',
-            {
-                controller: 'randomController',
-                templateUrl: 'app/partials/default.html'
-            })
-            .when('/dashboard',
-            {
-                controller: 'randomController',
                 templateUrl: 'app/partials/dashboard.html'
-            })
-            .when('/charts',
-            {
-                controller: 'randomController',
-                templateUrl: 'app/partials/charts.html'
             })
             .when('/tables',
             {
                 controller: 'randomController',
                 templateUrl: 'app/partials/tables.html'
             })
+            .when('/charts',
+            {
+                controller: 'randomController',
+                templateUrl: 'app/partials/charts.html'
+            })
+            .when('/forms',
+            {
+                controller: 'randomController',
+                templateUrl: 'app/partials/forms.html'
+            })
             .otherwise({redirectTo: '/'});
 });
 
 dashboardApp.controller('randomController', function($scope) {
-    $scope.customers = [];
 });
 
