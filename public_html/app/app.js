@@ -25,6 +25,20 @@ dashboardApp.config(function($routeProvider) {
             .otherwise({redirectTo: '/'});
 });
 
-dashboardApp.controller('randomController', function($scope) {
+dashboardApp.controller('randomController', function($scope, factory) {
+    $scope.number = [];
+    init();
+    function init(){
+        $scope.number = factory.getNumber();
+    }
+});
+
+dashboardApp.factory('factory', function(){
+    var number =   [{number:19}, {number:12},{number:124},{number:32}];
+    var factory = {};
+    factory.getNumber = function(){
+        return number;
+    };
+    return factory;
 });
 
