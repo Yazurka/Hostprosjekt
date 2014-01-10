@@ -149,19 +149,12 @@ function printResults(results) {
     if (results.rows && results.rows.length) {
         console.log('View (Profile) Name: ', results.profileInfo.profileName);
         console.log('antall rows', results.rows.length);
-        var lol = [];
-        lol[0]=results.rows[0];
-        
-        document.getElementById('lolsekk').innerHTML = "Anus";
-        return lol;
 
-
-//        for (var i = 0; i < results.rows.length; i++) {
-//            {
-//                //console.log('hei', results.rows[i]);
-//                document.write(results.row[i]);
-//            }
-//        }
+        for (var i = 0; i < results.rows.length; i++) {
+            {
+                console.log('hei', results.rows[i]);
+            }
+        }
 
 //    console.log('View (Profile) Name: ', results.profileInfo.profileName);
 //    console.log('Total Visits: ', results.rows[0][0]);

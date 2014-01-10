@@ -45,14 +45,9 @@ function handleAuthorized() {
   authorizeButton.style.visibility = 'hidden';
 
   // When the 'Get Visits' button is clicked, call the makeAapiCall function
-  //makeApiCallButton.onclick = makeApiCall;
-  makeApiCallButton.onclick = navTo;
-  
+  makeApiCallButton.onclick = makeApiCall;
 }
-function navTo(){
-    
-    window.location.href = "../index.html";
-}
+
 
 // Unauthorized user
 function handleUnAuthorized() {
