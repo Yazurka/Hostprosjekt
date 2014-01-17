@@ -3,7 +3,14 @@
 
         <div class="row">
           <div class="col-lg-12">
-            <h1>Charts <small>Display Your Data</small></h1>
+            <h1>Charts  <small>Display Your Data</small></h1>
+            
+                <ul>
+                    <li data-ng-repeat="cunt in chart"> {{cunt.name}}</li>
+                </ul>
+            <h3>
+                {{message}}
+            </h3>
             <ol class="breadcrumb">
               <li><a href="index.html"><i class="fa fa-dashboard"></i> Dashboard</a></li>
               <li class="active"><i class="fa fa-bar-chart-o"></i> Charts</li>

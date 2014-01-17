@@ -74,8 +74,8 @@
                                         <i class="fa fa-comments fa-5x"></i>
                                     </div>
                                     <div class="col-xs-6 text-right">
-                                        <p class="announcement-heading">{{data.flight}}</p>
-                                        <p class="announcement-text">Flight After 3</p>
+                                        <p class="announcement-heading">{{data.bounce}}</p>
+                                        <p class="announcement-text">Bounce rate</p>
                                     </div>
                                 </div>
                             </div>
@@ -123,6 +123,9 @@
                             </a>
                         </div>
                     </div>
+                    <ul>
+                        <li data-ng-repeat="d in temp">{{d.name}}</li>
+                    </ul>
                 </div><!-- /.row -->
 
                 <div class="row">
