@@ -1,3 +1,11 @@
+var d = new Date();
+var day = d.getDate();
+var month = d.getMonth()+1;
+var year = d.getFullYear();
+if(day < 10) day = '0'+day;
+if(month<10) month='0'+month;
+var date = year+'-'+month+'-'+day;
+
 statboard.controller('MainCtrl', function($scope, $window, googleLogin) {
 
     $window.init = function() {
@@ -10,12 +18,13 @@ statboard.controller('MainCtrl', function($scope, $window, googleLogin) {
     };
 });
 
-var dashCtrl = statboard.controller('DashboardCtrl', function($scope, getNewHits, getBounce, getReturning, getPageNav,getBouncRateOnPage) {
+var dashCtrl = statboard.controller('DashboardCtrl', function($scope, getDefaultPageData,getBouncRateOnPage) {
     var data = {};
-    data.newHits = getNewHits.rows[0][0];
-    data.bounce = getBounce.rows[0][0];
-    data.returning = getReturning.rows[0][0];
-    data.pageNavigations = getPageNav.rows[0][0];
+    data.pageNavigations = parseInt(getDefaultPageData.rows[0][3]) + parseInt(getDefaultPageData.rows[1][3]);
+    data.returning = getDefaultPageData.rows[1][4];
+    data.bounce = parseInt(getDefaultPageData.rows[1][2]) + parseInt(getDefaultPageData.rows[0][2]);
+    data.newHits = getDefaultPageData.rows[0][4];
+    
     $scope.data = data;
     $scope.bounces = getBouncRateOnPage.rows;
 
@@ -48,60 +57,15 @@ statboard.factory('factory', function() {
     return factory;
 });
 
-dashCtrl.getBounce = function($q) {
-    console.log("Get new hits");
+dashCtrl.getDefaultPageData = function($q) {
 
     var deferer = $q.defer();
     gapi.client.analytics.data.ga.get({
         'ids': 'ga:69056558',
-        'start-date': '2014-01-17',
-        'end-date': '2014-01-17',
-        'metrics': 'ga:bounces'
-    }).execute(function(results) {
-        deferer.resolve(results);
-    });
-    return deferer.promise;
-};
-
-dashCtrl.getReturning = function($q) {
-    console.log("Get new hits");
-
-    var deferer = $q.defer();
-    gapi.client.analytics.data.ga.get({
-        'ids': 'ga:69056558',
-        'start-date': '2014-01-17',
-        'end-date': '2014-01-17',
-        'metrics': 'ga:newVisits'
-    }).execute(function(results) {
-        deferer.resolve(results);
-    });
-    return deferer.promise;
-};
-
-dashCtrl.getPageNav = function($q) {
-    console.log("Get new hits");
-
-    var deferer = $q.defer();
-    gapi.client.analytics.data.ga.get({
-        'ids': 'ga:69056558',
-        'start-date': '2014-01-17',
-        'end-date': '2014-01-17',
-        'metrics': 'ga:pageviews'
-    }).execute(function(results) {
-        deferer.resolve(results);
-    });
-    return deferer.promise;
-};
-
-dashCtrl.getNewHits = function($q) {
-    console.log("Get new hits");
-
-    var deferer = $q.defer();
-    gapi.client.analytics.data.ga.get({
-        'ids': 'ga:69056558',
-        'start-date': '2014-01-17',
-        'end-date': '2014-01-17',
-        'metrics': 'ga:newVisits'
+        'start-date': date,
+        'end-date': date,
+        'dimensions':'ga:visitorType',
+        'metrics': 'ga:newVisits,ga:bounces,ga:pageviews,ga:visitors'
     }).execute(function(results) {
         deferer.resolve(results);
     });
@@ -110,7 +74,6 @@ dashCtrl.getNewHits = function($q) {
 
 appCtrl.loadData = function($q) {
 
-    console.log("gapi");
     var deferer = $q.defer();
 
     gapi.client.analytics.data.ga.get({
@@ -129,7 +92,6 @@ appCtrl.loadData = function($q) {
 };
 
 dashCtrl.getBouncRateOnPage = function($q) {
-    console.log("gapi");
     var deferer = $q.defer();
 
     gapi.client.analytics.data.ga.get({

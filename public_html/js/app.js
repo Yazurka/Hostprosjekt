@@ -11,10 +11,7 @@ statboard.config(function($routeProvider) {
                 controller: 'DashboardCtrl',
                 templateUrl: 'partials/dashboard.html',
                 resolve : {
-                    getNewHits: dashCtrl.getNewHits,
-                    getBounce: dashCtrl.getBounce,
-                    getReturning: dashCtrl.getReturning, 
-                    getPageNav: dashCtrl.getPageNav,
+                    getDefaultPageData: dashCtrl.getDefaultPageData,
                     getBouncRateOnPage : dashCtrl.getBouncRateOnPage
                 }
                 
