@@ -10,45 +10,22 @@ statboard.controller('MainCtrl', function($scope, $window, googleLogin) {
     };
 });
 
-var dashCtrl = statboard.controller('DashboardCtrl', function($scope, getNewHits, getBounce, getReturning, getPageNav) {
-    console.log("tabelsCtrl");
-    $scope.message = 'This is Add new order screen';
+var dashCtrl = statboard.controller('DashboardCtrl', function($scope, getNewHits, getBounce, getReturning, getPageNav,getBouncRateOnPage) {
     var data = {};
     data.newHits = getNewHits.rows[0][0];
     data.bounce = getBounce.rows[0][0];
     data.returning = getReturning.rows[0][0];
     data.pageNavigations = getPageNav.rows[0][0];
     $scope.data = data;
+    $scope.bounces = getBouncRateOnPage.rows;
 
 });
 statboard.controller('TabelsCtrl', function($scope) {
     console.log("tabelsCtrl");
 });
 
-var appCtrl = statboard.controller('ChartsCtrl', function($scope, $filter, loadData) {
-    var chart = [];
-
-    init();
-    function init() {
-//        $scope.chart = factory.getChart();
-    }
-    function fillChart() {
-        for (i = 1; i < loadData.rows.length; i++) {
-            chart[i] = Object({name: $filter('json')(loadData[i][1])});
-//        $scope.chart[i] = Object({name:loadData[i][1], visiotrs: loadData[i][1]});
-        }
-    }
-    ;
-
-    console.log(chart);
-//    
-//    for (i = 0; i < loadData.rows.length; i++) {       
-//        chart[i] = Object({title:loadData[i][0],visitor: loadData[i][1]})
-//           }
-
-    console.log("Lengden av tabellen: " + loadData.rows.length);
-
-    $scope.message = loadData.rows[1];
+var appCtrl = statboard.controller('ChartsCtrl', function($scope, loadData) {
+    $scope.res = loadData.rows;
 });
 
 
@@ -79,7 +56,7 @@ dashCtrl.getBounce = function($q) {
         'ids': 'ga:69056558',
         'start-date': '2014-01-17',
         'end-date': '2014-01-17',
-        'metrics': 'ga:bounces',
+        'metrics': 'ga:bounces'
     }).execute(function(results) {
         deferer.resolve(results);
     });
@@ -94,7 +71,7 @@ dashCtrl.getReturning = function($q) {
         'ids': 'ga:69056558',
         'start-date': '2014-01-17',
         'end-date': '2014-01-17',
-        'metrics': 'ga:newVisits',
+        'metrics': 'ga:newVisits'
     }).execute(function(results) {
         deferer.resolve(results);
     });
@@ -109,7 +86,7 @@ dashCtrl.getPageNav = function($q) {
         'ids': 'ga:69056558',
         'start-date': '2014-01-17',
         'end-date': '2014-01-17',
-        'metrics': 'ga:pageviews',
+        'metrics': 'ga:pageviews'
     }).execute(function(results) {
         deferer.resolve(results);
     });
@@ -124,7 +101,7 @@ dashCtrl.getNewHits = function($q) {
         'ids': 'ga:69056558',
         'start-date': '2014-01-17',
         'end-date': '2014-01-17',
-        'metrics': 'ga:newVisits',
+        'metrics': 'ga:newVisits'
     }).execute(function(results) {
         deferer.resolve(results);
     });
@@ -149,4 +126,23 @@ appCtrl.loadData = function($q) {
     });
 
     return deferer.promise;
-}
+};
+
+dashCtrl.getBouncRateOnPage = function($q) {
+    console.log("gapi");
+    var deferer = $q.defer();
+
+    gapi.client.analytics.data.ga.get({
+        'ids': 'ga:69056558',
+        'start-date': '2014-01-17',
+        'end-date': '2014-01-17',
+        'dimensions': 'ga:pageTitle',
+        'sort': '-ga:visitBounceRate',
+        'metrics': 'ga:visitBounceRate',
+        'max-results': '20'
+    }).execute(function(results) {
+        deferer.resolve(results);
+    });
+
+    return deferer.promise;
+};

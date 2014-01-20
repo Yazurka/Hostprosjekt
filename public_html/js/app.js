@@ -14,7 +14,8 @@ statboard.config(function($routeProvider) {
                     getNewHits: dashCtrl.getNewHits,
                     getBounce: dashCtrl.getBounce,
                     getReturning: dashCtrl.getReturning, 
-                    getPageNav: dashCtrl.getPageNav
+                    getPageNav: dashCtrl.getPageNav,
+                    getBouncRateOnPage : dashCtrl.getBouncRateOnPage
                 }
                 
             })

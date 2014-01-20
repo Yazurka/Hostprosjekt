@@ -4,10 +4,7 @@
         <div class="row">
           <div class="col-lg-12">
             <h1>Charts  <small>Display Your Data</small></h1>
-            
-                <ul>
-                    <li data-ng-repeat="cunt in chart"> {{cunt.name}}</li>
-                </ul>
+           
             <h3>
                 {{message}}
             </h3>
@@ -31,7 +28,22 @@
               </div>
               <div class="panel-body">
                 <div class="flot-chart">
-                  <div class="flot-chart-content" id="flot-chart-line"></div>
+                  <div class="flot-chart-content" id="flot-chart-line">
+                       <table class="table">
+                <tr>
+                    <td>
+                    Site
+                    </td>
+                    <td>
+                    Visitors
+                    </td>
+                </tr>
+            
+                <tr data-ng-repeat="temp in res">
+                    <td data-ng-repeat="i in temp"> {{i}}</td>
+                </tr>
+                </table>
+                  </div>
                 </div>
               </div>
             </div>
