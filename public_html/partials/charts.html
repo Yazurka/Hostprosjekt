@@ -1,0 +1,55 @@
+<div id="wrapper">
+      <div id="page-wrapper">
+
+        <div class="row">
+          <div class="col-lg-12">
+            <h1>Charts  <small>Display Your Data</small></h1>
+           
+            <h3>
+                {{message}}
+            </h3>
+            <ol class="breadcrumb">
+              <li><a href="index.html"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+              <li class="active"><i class="fa fa-bar-chart-o"></i> Charts</li>
+            </ol>
+            <div class="alert alert-info alert-dismissable">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            </div>
+          </div>
+        </div><!-- /.row -->
+
+        <div class="row">
+          <div class="col-lg-12">
+            <h2>Mest besøkte sider</h2>
+            
+            <table class="table">
+                <tr>
+                    <th>Site</th>
+                    <th>Visitors</th>
+                </tr>
+            
+                <tr data-ng-repeat="temp in res">
+                    <td data-ng-repeat="i in temp"> {{i}}</td>
+                </tr>
+                </table>
+
+      </div><!-- /#page-wrapper -->
+
+    </div><!-- /#wrapper -->
+
+    <!-- JavaScript -->
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/bootstrap.js"></script>
+
+    <!-- Page Specific Plugins -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="http://cdn.oesmith.co.uk/morris-0.4.3.min.js"></script>
+    <script src="../js/morris/chart-data-morris.js"></script>
+    <script src="../js/tablesorter/jquery.tablesorter.js"></script>
+    <script src="../js/tablesorter/tables.js"></script>
+    <!--[if lte IE 8]><script src="js/excanvas.min.js"></script><![endif]-->
+	<script src="../js/flot/jquery.flot.js"></script>
+	<script src="../js/flot/jquery.flot.tooltip.min.js"></script>
+	<script src="../js/flot/jquery.flot.resize.js"></script>
+	<script src="../js/flot/jquery.flot.pie.js"></script>
+	<script src="../js/flot/chart-data-flot.js"></script>
