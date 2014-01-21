@@ -7,21 +7,20 @@ var statboard = angular.module('statboard', ['ngRoute']);
 
 statboard.config(function($routeProvider) {
     $routeProvider
-            .when('/',{
-                controller: 'DashboardCtrl',
-                templateUrl: 'partials/dashboard.html',
-                resolve : {
-                    getDefaultPageData: dashCtrl.getDefaultPageData,
-                    getBouncRateOnPage : dashCtrl.getBouncRateOnPage
-                }
-                
-            })
+            .when('/', {
+        controller: 'DashboardCtrl',
+        templateUrl: 'partials/dashboard.html',
+        resolve: {
+            getDefaultPageData: dashCtrl.getDefaultPageData
+        }
+
+    })
             .when('/tables',
             {
                 controller: 'TabelsCtrl',
                 templateUrl: 'partials/tables.html',
-                resolve:{
-                    getBrowsers : TabelsCtrl.getBrowsers
+                resolve: {
+                    getBrowsers: TabelsCtrl.getBrowsers
                 }
             })
             .when('/charts',
@@ -31,7 +30,16 @@ statboard.config(function($routeProvider) {
                 resolve: {
                     mostUsed: appCtrl.mostUsed,
                     leastUsed: appCtrl.leastUsed
-        	}
+                }
+            })
+            .when('/forms',
+            {
+                controller: 'formsCtr,',
+                templateUrl: 'partials/forms.html',
+                resolve: {
+                    getBouncRateOnPage: dashCtrl.getBouncRateOnPage
+
+                }
             })
             .otherwise({redirectTo: '/'});
 });
