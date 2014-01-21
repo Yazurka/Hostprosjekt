@@ -35,8 +35,9 @@ var TabelsCtrl = statboard.controller('TabelsCtrl', function($scope,getBrowsers)
 });
 
 
-var appCtrl = statboard.controller('ChartsCtrl', function($scope, loadData) {
-    $scope.res = loadData.rows;
+var appCtrl = statboard.controller('ChartsCtrl', function($scope, mostUsed, leastUsed) {
+    $scope.res = mostUsed.rows;
+    $scope.lRes = leastUsed.rows;
 });
 
 TabelsCtrl.getBrowsers = function ($q){
@@ -57,7 +58,7 @@ statboard.factory('factory', function() {
 
     var factory = {};
     factory.getChart = function() {
-        console.log(loadData.rows[1]);
+        console.log(mostUsed.rows[1]);
         var t1 = new Array('Tore', 'Knutsen', 'Ludvigsen');
         for (i = 0; i < t1.length; i++) {
             chart[i] = Object({name: t1[i]});
@@ -86,7 +87,7 @@ dashCtrl.getDefaultPageData = function($q) {
     return deferer.promise;
 };
 
-appCtrl.loadData = function($q) {
+appCtrl.mostUsed = function($q) {
 
     var deferer = $q.defer();
 
@@ -97,7 +98,25 @@ appCtrl.loadData = function($q) {
         'dimensions': 'ga:pageTitle',
         'sort': '-ga:visitors',
         'metrics': 'ga:visitors',
-        'max-results': '50'
+        'max-results': '75'
+    }).execute(function(results) {
+        deferer.resolve(results);
+    });
+
+    return deferer.promise;
+};
+appCtrl.leastUsed = function($q) {
+
+    var deferer = $q.defer();
+
+    gapi.client.analytics.data.ga.get({
+        'ids': 'ga:69056558',
+        'start-date': '2014-01-17',
+        'end-date': '2014-01-17',
+        'dimensions': 'ga:pageTitle',
+        'sort': 'ga:visitors',
+        'metrics': 'ga:visitors',
+        'max-results': '75'
     }).execute(function(results) {
         deferer.resolve(results);
     });
