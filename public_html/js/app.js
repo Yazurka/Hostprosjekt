@@ -34,10 +34,10 @@ statboard.config(function($routeProvider) {
             })
             .when('/forms',
             {
-                controller: 'formsCtr,',
+                controller: 'formsCtrl',
                 templateUrl: 'partials/forms.html',
                 resolve: {
-                    getBouncRateOnPage: dashCtrl.getBouncRateOnPage
+                    getBouncRateOnPage: formsCtrl.getBouncRateOnPage
 
                 }
             })

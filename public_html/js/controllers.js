@@ -18,7 +18,7 @@ statboard.controller('MainCtrl', function($scope, $window, googleLogin) {
     };
 });
 
-var dashCtrl = statboard.controller('DashboardCtrl', function($scope, getDefaultPageData,getBouncRateOnPage) {
+var dashCtrl = statboard.controller('DashboardCtrl', function($scope, getDefaultPageData) {
     var data = {};
     data.pageNavigations = parseInt(getDefaultPageData.rows[0][3]) + parseInt(getDefaultPageData.rows[1][3]);
     data.returning = getDefaultPageData.rows[1][4];
@@ -26,7 +26,6 @@ var dashCtrl = statboard.controller('DashboardCtrl', function($scope, getDefault
     data.newHits = getDefaultPageData.rows[0][4];
     
     $scope.data = data;
-    $scope.bounces = getBouncRateOnPage.rows;
 
 });
 var TabelsCtrl = statboard.controller('TabelsCtrl', function($scope,getBrowsers) {
@@ -38,6 +37,10 @@ var TabelsCtrl = statboard.controller('TabelsCtrl', function($scope,getBrowsers)
 var appCtrl = statboard.controller('ChartsCtrl', function($scope, mostUsed, leastUsed) {
     $scope.res = mostUsed.rows;
     $scope.lRes = leastUsed.rows;
+});
+
+var formsCtrl = statboard.controller('formsCtrl', function($scope, getBouncRateOnPage){
+    $scope.bounces = getBouncRateOnPage.rows;
 });
 
 TabelsCtrl.getBrowsers = function ($q){
@@ -124,7 +127,7 @@ appCtrl.leastUsed = function($q) {
     return deferer.promise;
 };
 
-dashCtrl.getBouncRateOnPage = function($q) {
+formsCtrl.getBouncRateOnPage = function($q) {
     var deferer = $q.defer();
 
     gapi.client.analytics.data.ga.get({
