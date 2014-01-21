@@ -1,10 +1,14 @@
+var date = null;
+
+function setDate(){
 var d = new Date();
 var day = d.getDate();
 var month = d.getMonth()+1;
 var year = d.getFullYear();
 if(day < 10) day = '0'+day;
 if(month<10) month='0'+month;
-var date = year+'-'+month+'-'+day;
+date = year+'-'+month+'-'+day;
+}
 
 statboard.controller('MainCtrl', function($scope, $window, googleLogin) {
 
@@ -76,7 +80,7 @@ statboard.factory('factory', function() {
 });
 
 dashCtrl.getDefaultPageData = function($q) {
-
+    if(!date) setDate();
     var deferer = $q.defer();
     gapi.client.analytics.data.ga.get({
         'ids': 'ga:69056558',
