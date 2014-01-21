@@ -26,7 +26,8 @@ statboard.config(function($routeProvider) {
                 controller: 'ChartsCtrl',
                 templateUrl: 'partials/charts.html',
                 resolve: {
-                    loadData: appCtrl.loadData
+                    mostUsed: appCtrl.mostUsed,
+                    leastUsed: appCtrl.leastUsed
         	}
             })
             .otherwise({redirectTo: '/'});

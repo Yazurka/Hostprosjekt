@@ -126,19 +126,22 @@
         </div><!-- /.row -->
 
         <div class="row">
-             <table class="table">
-                 
-                                
-                                    <th>
-                                        Site
-                                    </th>
-                                    <th>
-                                        Bounce rate
-                                    </th>
-                                <tr data-ng-repeat="temp in bounces">
-                                    <td data-ng-repeat="i in temp">{{i}}</td>
-                                </tr>
-                            </table>
+            <div class="col-lg-12">
+            <div class="page-header">
+                <h1>Number of bounces</h1>
+            </div>
+            <table class="table">
+                <th>
+                    Site
+                </th>
+                <th>
+                    Bounce rate
+                </th>
+                <tr data-ng-repeat="temp in bounces">
+                    <td data-ng-repeat="i in temp">{{i}}</td>
+                </tr>
+            </table>
+            </div>
         </div><!-- /.row -->
 
     </div><!-- /#page-wrapper -->
