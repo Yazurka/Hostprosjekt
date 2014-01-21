@@ -29,15 +29,29 @@ var dashCtrl = statboard.controller('DashboardCtrl', function($scope, getDefault
     $scope.bounces = getBouncRateOnPage.rows;
 
 });
-statboard.controller('TabelsCtrl', function($scope) {
+var TabelsCtrl = statboard.controller('TabelsCtrl', function($scope,getBrowsers) {
+    $scope.getBrowsers=getBrowsers.rows;
     console.log("tabelsCtrl");
 });
+
 
 var appCtrl = statboard.controller('ChartsCtrl', function($scope, loadData) {
     $scope.res = loadData.rows;
 });
 
-
+TabelsCtrl.getBrowsers = function ($q){
+    var deferer = $q.defer();
+    gapi.client.analytics.data.ga.get({
+        'ids': 'ga:69056558',
+        'start-date': date,
+        'end-date': date,
+        'dimensions':'ga:browser',
+        'metrics': 'ga:visitors'
+    }).execute(function(results) {
+        deferer.resolve(results);
+    });
+    return deferer.promise;
+};
 statboard.factory('factory', function() {
     var chart = [];
 

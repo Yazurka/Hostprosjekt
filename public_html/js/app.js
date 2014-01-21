@@ -19,7 +19,10 @@ statboard.config(function($routeProvider) {
             .when('/tables',
             {
                 controller: 'TabelsCtrl',
-                templateUrl: 'partials/tables.html'
+                templateUrl: 'partials/tables.html',
+                resolve:{
+                    getBrowsers : TabelsCtrl.getBrowsers
+                }
             })
             .when('/charts',
             {
