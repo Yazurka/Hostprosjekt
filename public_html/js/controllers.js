@@ -24,6 +24,8 @@ statboard.controller('MainCtrl', function($scope, $window, googleLogin) {
 
 var dashCtrl = statboard.controller('DashboardCtrl', function($scope, getDefaultPageData,getLogin,getTopBrowser) {
     var data = {};
+    console.log(getDefaultPageData.rows[0][2]);
+    console.log(getDefaultPageData.rows[1][2]);
     data.pageNavigations = parseInt(getDefaultPageData.rows[0][3]) + parseInt(getDefaultPageData.rows[1][3]);
     data.returning = getDefaultPageData.rows[1][4];
     data.bounce = parseInt(getDefaultPageData.rows[1][2]) + parseInt(getDefaultPageData.rows[0][2]);
@@ -121,7 +123,7 @@ dashCtrl.getDefaultPageData = function($q) {
         'start-date': date,
         'end-date': date,
         'dimensions':'ga:visitorType',
-        'metrics': 'ga:newVisits,ga:bounces,ga:pageviews,ga:visitors'
+        'metrics': 'ga:newVisits,ga:visitBounceRate,ga:pageviews,ga:visitors'
     }).execute(function(results) {
         deferer.resolve(results);
     });
