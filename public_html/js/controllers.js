@@ -22,13 +22,14 @@ statboard.controller('MainCtrl', function($scope, $window, googleLogin) {
     };
 });
 
-var dashCtrl = statboard.controller('DashboardCtrl', function($scope, getDefaultPageData,getLogin) {
+var dashCtrl = statboard.controller('DashboardCtrl', function($scope, getDefaultPageData,getLogin,getTopBrowser) {
     var data = {};
     data.pageNavigations = parseInt(getDefaultPageData.rows[0][3]) + parseInt(getDefaultPageData.rows[1][3]);
     data.returning = getDefaultPageData.rows[1][4];
     data.bounce = parseInt(getDefaultPageData.rows[1][2]) + parseInt(getDefaultPageData.rows[0][2]);
     data.newHits = getDefaultPageData.rows[0][4];
     $scope.getLogin = getLogin.rows;
+    $scope.getTopBrowser = getTopBrowser.rows;
     $scope.data = data;
 
 });
@@ -46,6 +47,23 @@ var appCtrl = statboard.controller('ChartsCtrl', function($scope, mostUsed, leas
 var formsCtrl = statboard.controller('formsCtrl', function($scope, getBouncRateOnPage){
     $scope.bounces = getBouncRateOnPage.rows;
 });
+
+dashCtrl.getTopBrowser = function ($q){
+    if(!date) setDate();
+    var deferer = $q.defer();
+    gapi.client.analytics.data.ga.get({
+        'ids': 'ga:69056558',
+        'start-date': date,
+        'end-date': date,
+        'dimensions':'ga:browser',
+        'metrics': 'ga:visitors',
+        'max-results': '1',
+        'sort': '-ga:visitors'
+    }).execute(function(results) {
+        deferer.resolve(results);
+    });
+    return deferer.promise;
+};
 
 TabelsCtrl.getBrowsers = function ($q){
     var deferer = $q.defer();
@@ -147,16 +165,17 @@ appCtrl.leastUsed = function($q) {
 };
 
 formsCtrl.getBouncRateOnPage = function($q) {
+    if(!date) setDate();
     var deferer = $q.defer();
 
     gapi.client.analytics.data.ga.get({
         'ids': 'ga:69056558',
-        'start-date': '2014-01-17',
-        'end-date': '2014-01-17',
-        'dimensions': 'ga:pageTitle',
-        'sort': '-ga:visitBounceRate',
-        'metrics': 'ga:visitBounceRate',
-        'max-results': '20'
+        'start-date': date,
+        'end-date': date,
+        'dimensions': 'ga:exitPagePath',
+        'sort': '-ga:visitors',
+        'metrics': 'ga:visitors',
+        'max-results': '50'
     }).execute(function(results) {
         deferer.resolve(results);
     });
