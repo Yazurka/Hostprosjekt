@@ -11,7 +11,16 @@ date = year+'-'+month+'-'+day;
 }
 
 statboard.controller('MainCtrl', function($scope, $window, googleLogin) {
-
+    
+    $scope.setActive = function (type) {
+        $scope.startActive = '';
+        $scope.chartsActive = '';
+        $scope.tablesActive = '';
+        $scope.formsActive = '';
+        
+        $scope[type + 'Active'] = 'active';
+    }
+    
     $window.init = function() {
         $scope.$apply($scope.handleClientLoad());
     };
