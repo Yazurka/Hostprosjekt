@@ -72,7 +72,8 @@ TabelsCtrl.getBrowsers = function ($q){
         'start-date': date,
         'end-date': date,
         'dimensions':'ga:browser',
-        'metrics': 'ga:visitors'
+        'metrics': 'ga:visitors',
+        'sort': '-ga:visitors'
     }).execute(function(results) {
         deferer.resolve(results);
     });
