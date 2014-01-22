@@ -11,7 +11,8 @@ statboard.config(function($routeProvider) {
         controller: 'DashboardCtrl',
         templateUrl: 'partials/dashboard.html',
         resolve: {
-            getDefaultPageData: dashCtrl.getDefaultPageData
+            getDefaultPageData: dashCtrl.getDefaultPageData,
+            getLogin: dashCtrl.getLogin
         }
 
     })

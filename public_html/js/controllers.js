@@ -22,13 +22,13 @@ statboard.controller('MainCtrl', function($scope, $window, googleLogin) {
     };
 });
 
-var dashCtrl = statboard.controller('DashboardCtrl', function($scope, getDefaultPageData) {
+var dashCtrl = statboard.controller('DashboardCtrl', function($scope, getDefaultPageData,getLogin) {
     var data = {};
     data.pageNavigations = parseInt(getDefaultPageData.rows[0][3]) + parseInt(getDefaultPageData.rows[1][3]);
     data.returning = getDefaultPageData.rows[1][4];
     data.bounce = parseInt(getDefaultPageData.rows[1][2]) + parseInt(getDefaultPageData.rows[0][2]);
     data.newHits = getDefaultPageData.rows[0][4];
-    
+    $scope.getLogin = getLogin.rows;
     $scope.data = data;
 
 });
@@ -78,6 +78,21 @@ statboard.factory('factory', function() {
     };
     return factory;
 });
+dashCtrl.getLogin = function ($q){
+    if(!date) setDate();
+    var deferer = $q.defer();
+    gapi.client.analytics.data.ga.get({
+        'ids': 'ga:69056558',
+        'start-date': date,
+        'end-date': date,
+        'dimensions':'ga:pageTitle',
+        'metrics': 'ga:visitors',
+        'filters': 'ga:pageTitle==Nettbedrift - Pålogging med BankID'
+    }).execute(function(results) {
+        deferer.resolve(results);
+    });
+    return deferer.promise;
+};
 
 dashCtrl.getDefaultPageData = function($q) {
     if(!date) setDate();
