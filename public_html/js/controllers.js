@@ -1,26 +1,33 @@
 var date = null;
 
-function setDate(){
-var d = new Date();
-var day = d.getDate();
-var month = d.getMonth()+1;
-var year = d.getFullYear();
-if(day < 10) day = '0'+day;
-if(month<10) month='0'+month;
-date = year+'-'+month+'-'+day;
+function setDate() {
+    var d, day, month, year;
+    d = new Date();
+    day = d.getDate();
+    month = d.getMonth() + 1;
+    year = d.getFullYear();
+    if (day < 10)
+        day = '0' + day;
+    if (month < 10)
+        month = '0' + month;
+    date = year + '-' + month + '-' + day;
+}
+
+function roundNumber(num, dec){
+    return Math.round(num*Math.pow(10,dec))/Math.pow(10,dec);
 }
 
 statboard.controller('MainCtrl', function($scope, $window, googleLogin) {
-    
-    $scope.setActive = function (type) {
+
+    $scope.setActive = function(type) {
         $scope.startActive = '';
         $scope.chartsActive = '';
         $scope.tablesActive = '';
         $scope.formsActive = '';
-        
+
         $scope[type + 'Active'] = 'active';
-    }
-    
+    };
+
     $window.init = function() {
         $scope.$apply($scope.handleClientLoad());
     };
@@ -31,21 +38,22 @@ statboard.controller('MainCtrl', function($scope, $window, googleLogin) {
     };
 });
 
-var dashCtrl = statboard.controller('DashboardCtrl', function($scope, getDefaultPageData,getLogin,getTopBrowser) {
+
+var dashCtrl = statboard.controller('DashboardCtrl', function($scope, getDefaultPageData, getLogin, getTopBrowser) {
     var data = {};
     console.log(getDefaultPageData.rows[0][2]);
     console.log(getDefaultPageData.rows[1][2]);
     data.pageNavigations = parseInt(getDefaultPageData.rows[0][3]) + parseInt(getDefaultPageData.rows[1][3]);
     data.returning = getDefaultPageData.rows[1][4];
-    data.bounce = parseInt(getDefaultPageData.rows[1][2]) + parseInt(getDefaultPageData.rows[0][2]);
+    data.bounce = roundNumber(parseFloat(getDefaultPageData.rows[1][2]) + parseFloat(getDefaultPageData.rows[0][2]),2);
     data.newHits = getDefaultPageData.rows[0][4];
     $scope.getLogin = getLogin.rows;
     $scope.getTopBrowser = getTopBrowser.rows;
     $scope.data = data;
 
 });
-var TabelsCtrl = statboard.controller('TabelsCtrl', function($scope,getBrowsers) {
-    $scope.getBrowsers=getBrowsers.rows;
+var TabelsCtrl = statboard.controller('TabelsCtrl', function($scope, getBrowsers) {
+    $scope.getBrowsers = getBrowsers.rows;
     console.log("tabelsCtrl");
 });
 
@@ -55,18 +63,19 @@ var appCtrl = statboard.controller('ChartsCtrl', function($scope, mostUsed, leas
     $scope.lRes = leastUsed.rows;
 });
 
-var formsCtrl = statboard.controller('formsCtrl', function($scope, getBouncRateOnPage){
+var formsCtrl = statboard.controller('formsCtrl', function($scope, getBouncRateOnPage) {
     $scope.bounces = getBouncRateOnPage.rows;
 });
 
-dashCtrl.getTopBrowser = function ($q){
-    if(!date) setDate();
+dashCtrl.getTopBrowser = function($q) {
+    if (!date)
+        setDate();
     var deferer = $q.defer();
     gapi.client.analytics.data.ga.get({
         'ids': 'ga:69056558',
         'start-date': date,
         'end-date': date,
-        'dimensions':'ga:browser',
+        'dimensions': 'ga:browser',
         'metrics': 'ga:visitors',
         'max-results': '1',
         'sort': '-ga:visitors'
@@ -76,13 +85,15 @@ dashCtrl.getTopBrowser = function ($q){
     return deferer.promise;
 };
 
-TabelsCtrl.getBrowsers = function ($q){
+TabelsCtrl.getBrowsers = function($q) {
+    if (!date)
+        setDate();
     var deferer = $q.defer();
     gapi.client.analytics.data.ga.get({
         'ids': 'ga:69056558',
         'start-date': date,
         'end-date': date,
-        'dimensions':'ga:browser',
+        'dimensions': 'ga:browser',
         'metrics': 'ga:visitors',
         'sort': '-ga:visitors'
     }).execute(function(results) {
@@ -90,9 +101,9 @@ TabelsCtrl.getBrowsers = function ($q){
     });
     return deferer.promise;
 };
+
 statboard.factory('factory', function() {
     var chart = [];
-
     var factory = {};
     factory.getChart = function() {
         console.log(mostUsed.rows[1]);
@@ -102,20 +113,20 @@ statboard.factory('factory', function() {
         }
         return chart;
     };
-
     factory.postCustomers = function() {
-
     };
     return factory;
 });
-dashCtrl.getLogin = function ($q){
-    if(!date) setDate();
+
+dashCtrl.getLogin = function($q) {
+    if (!date)
+        setDate();
     var deferer = $q.defer();
     gapi.client.analytics.data.ga.get({
         'ids': 'ga:69056558',
         'start-date': date,
         'end-date': date,
-        'dimensions':'ga:pageTitle',
+        'dimensions': 'ga:pageTitle',
         'metrics': 'ga:visitors',
         'filters': 'ga:pageTitle==Nettbedrift - Pålogging med BankID'
     }).execute(function(results) {
@@ -125,13 +136,14 @@ dashCtrl.getLogin = function ($q){
 };
 
 dashCtrl.getDefaultPageData = function($q) {
-    if(!date) setDate();
+    if (!date)
+        setDate();
     var deferer = $q.defer();
     gapi.client.analytics.data.ga.get({
         'ids': 'ga:69056558',
         'start-date': date,
         'end-date': date,
-        'dimensions':'ga:visitorType',
+        'dimensions': 'ga:visitorType',
         'metrics': 'ga:newVisits,ga:visitBounceRate,ga:pageviews,ga:visitors'
     }).execute(function(results) {
         deferer.resolve(results);
@@ -140,9 +152,9 @@ dashCtrl.getDefaultPageData = function($q) {
 };
 
 appCtrl.mostUsed = function($q) {
-
+    if (!date)
+        setDate();
     var deferer = $q.defer();
-
     gapi.client.analytics.data.ga.get({
         'ids': 'ga:69056558',
         'start-date': '2014-01-17',
@@ -154,13 +166,12 @@ appCtrl.mostUsed = function($q) {
     }).execute(function(results) {
         deferer.resolve(results);
     });
-
     return deferer.promise;
 };
+
 appCtrl.leastUsed = function($q) {
-
+if (!date) setDate();
     var deferer = $q.defer();
-
     gapi.client.analytics.data.ga.get({
         'ids': 'ga:69056558',
         'start-date': '2014-01-17',
@@ -172,14 +183,13 @@ appCtrl.leastUsed = function($q) {
     }).execute(function(results) {
         deferer.resolve(results);
     });
-
     return deferer.promise;
 };
 
 formsCtrl.getBouncRateOnPage = function($q) {
-    if(!date) setDate();
+    if (!date)
+        setDate();
     var deferer = $q.defer();
-
     gapi.client.analytics.data.ga.get({
         'ids': 'ga:69056558',
         'start-date': date,
@@ -191,6 +201,5 @@ formsCtrl.getBouncRateOnPage = function($q) {
     }).execute(function(results) {
         deferer.resolve(results);
     });
-
     return deferer.promise;
 };
