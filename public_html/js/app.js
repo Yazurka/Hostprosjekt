@@ -22,7 +22,10 @@ statboard.config(function($routeProvider) {
                 controller: 'TabelsCtrl',
                 templateUrl: 'partials/tables.html',
                 resolve: {
-                    getBrowsers: TabelsCtrl.getBrowsers
+                    getBrowsers: TabelsCtrl.getBrowsers,
+                    getDevice: TabelsCtrl.getDevice,
+                    getOS: TabelsCtrl.getOS,
+                    getJava: TabelsCtrl.getJava
                 }
             })
             .when('/charts',

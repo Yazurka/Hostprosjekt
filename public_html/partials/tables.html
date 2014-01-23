@@ -4,14 +4,56 @@
 
         <div class="row">
             <div class="page-header">
-                <h1>Browser usage<small> The most used browsers</small></h1>
+                <h1>Browser usage and Operating system<small> The most used browsers and OS</small></h1>
             </div>
 
-            <div class="col-lg-12">
+            <div class="col-lg-6">
                 <table class="table">
                     <th>Browser</th>
+                    <th>Version</th>
                     <th>Users</th>
                 <tr data-ng-repeat="l in getBrowsers">
+                    <td data-ng-repeat="x in l">{{x}}</td>
+                </tr>
+                </table>
+
+
+            </div>
+             <div class="col-lg-6">
+                <table class="table">
+                    <th>Operating System</th>
+                    <th>Version</th>
+                    <th>Users</th>
+                <tr data-ng-repeat="l in getOS">
+                    <td data-ng-repeat="x in l">{{x}}</td>
+                </tr>
+                </table>
+
+
+            </div>
+           
+        </div><!-- /.row -->
+        <div class="row">
+            <div class="page-header">
+                <h1>Java and Device<small></small></h1>
+            </div>
+
+            <div class="col-lg-6">
+                <table class="table">
+                    <th>Java enabled</th>
+                    <th>Users</th>
+                <tr data-ng-repeat="l in getJava">
+                    <td data-ng-repeat="x in l">{{x}}</td>
+                </tr>
+                </table>
+
+
+            </div>
+             <div class="col-lg-6">
+                <table class="table">
+                    <th>Device</th>
+                    <th>Users</th>
+                <tr data-ng-repeat="l in getDevice">
                     <td data-ng-repeat="x in l">{{x}}</td>
                 </tr>
                 </table>

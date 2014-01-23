@@ -52,8 +52,11 @@ var dashCtrl = statboard.controller('DashboardCtrl', function($scope, getDefault
     $scope.data = data;
 
 });
-var TabelsCtrl = statboard.controller('TabelsCtrl', function($scope, getBrowsers) {
+var TabelsCtrl = statboard.controller('TabelsCtrl', function($scope, getBrowsers, getDevice,getOS, getJava) {
     $scope.getBrowsers = getBrowsers.rows;
+    $scope.getDevice = getDevice.rows;
+    $scope.getOS = getOS.rows;
+    $scope.getJava = getJava.rows;
     console.log("tabelsCtrl");
 });
 
@@ -85,6 +88,39 @@ dashCtrl.getTopBrowser = function($q) {
     return deferer.promise;
 };
 
+TabelsCtrl.getDevice = function ($q){
+    if (!date)
+        setDate();
+    var deferer = $q.defer();
+    gapi.client.analytics.data.ga.get({
+        'ids': 'ga:69056558',
+        'start-date': date,
+        'end-date': date,
+        'dimensions': 'ga:deviceCategory',
+        'metrics': 'ga:visitors',
+        'sort': '-ga:visitors'
+    }).execute(function(results) {
+        deferer.resolve(results);
+    });
+    return deferer.promise;
+};
+TabelsCtrl.getJava = function ($q){
+    if (!date)
+        setDate();
+    var deferer = $q.defer();
+    gapi.client.analytics.data.ga.get({
+        'ids': 'ga:69056558',
+        'start-date': date,
+        'end-date': date,
+        'dimensions': 'ga:javaEnabled',
+        'metrics': 'ga:visitors',
+        'sort': '-ga:visitors'
+    }).execute(function(results) {
+        deferer.resolve(results);
+    });
+    return deferer.promise;
+};
+
 TabelsCtrl.getBrowsers = function($q) {
     if (!date)
         setDate();
@@ -93,9 +129,27 @@ TabelsCtrl.getBrowsers = function($q) {
         'ids': 'ga:69056558',
         'start-date': date,
         'end-date': date,
-        'dimensions': 'ga:browser',
+        'dimensions': 'ga:browser,ga:browserVersion',
         'metrics': 'ga:visitors',
-        'sort': '-ga:visitors'
+        'sort': '-ga:visitors',
+        'max-results': '50'
+    }).execute(function(results) {
+        deferer.resolve(results);
+    });
+    return deferer.promise;
+};
+TabelsCtrl.getOS = function($q) {
+    if (!date)
+        setDate();
+    var deferer = $q.defer();
+    gapi.client.analytics.data.ga.get({
+        'ids': 'ga:69056558',
+        'start-date': date,
+        'end-date': date,
+        'dimensions': 'ga:operatingSystem,ga:operatingSystemVersion',
+        'metrics': 'ga:visitors',
+        'sort': '-ga:visitors',
+        'max-results': '50'
     }).execute(function(results) {
         deferer.resolve(results);
     });
