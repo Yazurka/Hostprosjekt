@@ -41,8 +41,6 @@ statboard.controller('MainCtrl', function($scope, $window, googleLogin) {
 
 var dashCtrl = statboard.controller('DashboardCtrl', function($scope, getDefaultPageData, getLogin, getTopBrowser) {
     var data = {};
-    console.log(getDefaultPageData.rows[0][2]);
-    console.log(getDefaultPageData.rows[1][2]);
     data.pageNavigations = parseInt(getDefaultPageData.rows[0][3]) + parseInt(getDefaultPageData.rows[1][3]);
     data.returning = getDefaultPageData.rows[1][4];
     data.bounce = roundNumber(parseFloat(getDefaultPageData.rows[1][2]) + parseFloat(getDefaultPageData.rows[0][2]),2);
@@ -211,8 +209,8 @@ appCtrl.mostUsed = function($q) {
     var deferer = $q.defer();
     gapi.client.analytics.data.ga.get({
         'ids': 'ga:69056558',
-        'start-date': '2014-01-17',
-        'end-date': '2014-01-17',
+        'start-date': date,
+        'end-date': date,
         'dimensions': 'ga:pageTitle',
         'sort': '-ga:visitors',
         'metrics': 'ga:visitors',
@@ -228,8 +226,8 @@ if (!date) setDate();
     var deferer = $q.defer();
     gapi.client.analytics.data.ga.get({
         'ids': 'ga:69056558',
-        'start-date': '2014-01-17',
-        'end-date': '2014-01-17',
+        'start-date': date,
+        'end-date': date,
         'dimensions': 'ga:pageTitle',
         'sort': 'ga:visitors',
         'metrics': 'ga:visitors',
